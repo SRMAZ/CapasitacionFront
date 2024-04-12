@@ -1,0 +1,97 @@
+<div class="grid">
+	<div class="col-12 xl:col-12">
+		<div class="card">
+			<ng-template [ngIf]="loading" [ngIfElse]="showTable">
+				<skeleton-table-component [title]="title"></skeleton-table-component>
+			</ng-template>
+
+			<ng-template #showTable>
+				<!-- Filtro de rango de fecha -->
+				<form [formGroup]="formFilter"  class="mb-5">
+					<div class="grid p-fluid">
+						<div class="col-12 md:col-4">
+							<span class="mt-4 p-float-label p-input-icon-left">
+								<input id="from" type="date" pInputText formControlName="from" [ngClass]="{
+										'is-invalid': submitted && f.from.errors
+									}" />
+							</span>
+							<div *ngIf="
+									formFilter.controls['from'].invalid &&
+									formFilter.controls['from'].dirty
+								">
+								<small *ngIf="
+										formFilter.controls['from'].errors.required
+									" id="from" class="p-error block">from es requerido</small>
+							</div>
+						</div>
+						<div class="col-12 md:col-4">
+							<span class="mt-4 p-float-label p-input-icon-left">
+								<input id="to" type="date" pInputText formControlName="to" [ngClass]="{
+										'is-invalid': submitted && f.from.errors
+									}" />
+							</span>
+							<div *ngIf="
+									formFilter.controls['to'].invalid &&
+									formFilter.controls['to'].dirty
+								">
+								<small *ngIf="
+										formFilter.controls['to'].errors.required
+									" id="to" class="p-error block">Hasta es requerido</small>
+							</div>
+						</div>
+						<div class="col-12 md:col-4">
+							<button pButton type="button" class="mt-4" [disabled]="formFilter.invalid || loading" (click)="getOrder()"
+							label="Buscar"></button>
+						</div>
+					</div>
+				</form>
+				<!-- Listado de tabla -->
+					<p-table #dt [value]="orderList" [paginator]="true"  [rows]="5"
+					responsiveLayout="scroll"  styleClass="p-datatable-sm p-datatable-gridlines" [globalFilterFields]="['docNum','docEntry', 'cardCode', 'docDate','docTotal']">
+						<ng-template pTemplate="header">
+							<tr>
+								  <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon> <p-columnFilter type="text" field="id" display="menu" class="ml-auto" ></p-columnFilter></th>
+								<th pSortableColumn="docNum">Numero Referencia <p-sortIcon field="docNum"></p-sortIcon> <p-columnFilter type="text" field="docNum" display="menu" class="ml-auto"></p-columnFilter></th>
+								<th pSortableColumn="docEntry">Numero <p-sortIcon field="docEntry"></p-sortIcon><p-columnFilter type="text" field="docEntry" display="menu" class="ml-auto"></p-columnFilter></th>
+								<th pSortableColumn="cardCode">Fecha <p-sortIcon field="cardCode"></p-sortIcon><p-columnFilter type="text" field="cardCode" display="menu" class="ml-auto"></p-columnFilter></th>
+								<th pSortableColumn="docTotal">Numero de Documento <p-sortIcon field="docTotal"></p-sortIcon><p-columnFilter type="text" field="docTotal" display="menu" class="ml-auto"></p-columnFilter></th>
+ 								<th>Acción</th>  
+							</tr>
+						</ng-template>
+							<ng-template pTemplate="caption">
+                                <h4 class="mt-2">{{title}}</h4>
+								<div class="flex">
+									<button pButton  class="ml-2" pRipple type="button" (click)="addOrder()" pTooltip="Agregar nuevo usuario" tooltipPosition="bottom" label="Agregar" ></button>
+									<span class="p-input-icon-left ml-auto">
+										<i class="pi pi-search"></i>
+										<input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar una palabra" />
+									</span>
+								</div>
+							</ng-template>
+						<ng-template pTemplate="body" let-order>
+							 <tr>
+								<td style="width: 10%; min-width: 2rem;">{{order.id }}</td>
+								<td style="width: 35%; min-width: 7rem;">{{order.docNum}}</td>
+								<td style="width: 25%; min-width: 4rem;">{{order.docEntry}}</td>
+								<td style="width: 20%; min-width: 4rem;">{{order.docDate | date:'dd/mm/yyyy'}}</td>
+								<td style="width: 35%; min-width: 5rem;">{{order.cardCode}}</td>
+								<td style="width: 15%; min-width: 4rem;">
+									<ng-template [ngIf]="order.active" [ngIfElse]="inactive">
+										<p-chip label="Activo" styleClass="custom-chip" icon="pi pi-check"></p-chip>
+									</ng-template>
+									<ng-template #inactive>
+										<p-chip label="Inactivo" icon="pi pi-check"></p-chip>
+									</ng-template>
+								</td>
+								<td style="width: 20%;">
+									<button (click)="editOrder(order)" pButton pRipple type="button" icon="pi pi-pencil" class="p-button p-component p-button-text p-button-icon-only"></button>
+								</td>
+							</tr> 
+						</ng-template>
+					</p-table>
+                    <app-order-dialog></app-order-dialog>
+			</ng-template>
+		</div>
+	</div>
+	 <!-- <order-dialog-component (orderModify)="orderModify($event)" ></order-dialog-component> -->
+</div>

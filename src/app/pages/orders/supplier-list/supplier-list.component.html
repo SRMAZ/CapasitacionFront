@@ -1,0 +1,36 @@
+<p-dialog header="Crear pedido de compra" [(visible)]="display" modal="true" blockScroll="true"
+	[style]="{ width: '50vw' }">
+	<ng-template [ngIf]="loading" [ngIfElse]="showTable"> Cargando... </ng-template>
+
+	<ng-template #showTable>
+		<p-table #dt [value]="supplier" [paginator]="true" [rows]="5" selectionMode="single" dataKey="code"
+			responsiveLayout="scroll" styleClass="p-datatable-sm p-datatable-grcodelines"
+			[globalFilterFields]="['code', 'name']">
+			<ng-template pTemplate="header">
+				<tr>
+					<th pSortableColumn="code">	
+						code <p-sortIcon field="code"></p-sortIcon>
+						<p-columnFilter type="text" field="code" display="menu" class="ml-auto"></p-columnFilter>
+					</th>
+					<th pSortableColumn="name">
+						Nombre Proveedor
+						<p-sortIcon field="name"></p-sortIcon>
+						<p-columnFilter type="text" field="name" display="menu" class="ml-auto"></p-columnFilter>
+					</th>
+				</tr>
+			</ng-template>
+
+			<ng-template pTemplate="body" let-supplier>
+				<tr (click)="selectSupplier(supplier)" >
+					<td style="wcodeth: 10%; min-wcodeth: 2rem">
+						{{ supplier.code }}
+					</td>
+					<td style="wcodeth: 35%; min-wcodeth: 7rem">
+						{{ supplier.name }}
+					</td>
+
+				</tr>
+			</ng-template>
+		</p-table>
+	</ng-template>
+</p-dialog>

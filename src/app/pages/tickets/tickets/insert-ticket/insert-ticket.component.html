@@ -1,0 +1,64 @@
+<div class="grid">
+	<div class="col-12 xl:col-12">
+		<div class="card">
+			 <h1>hOLA MUBNDO </h1>
+            <form [formGroup]="formTicket" *ngIf="formTicket" class="mb-5">
+                <div class="grid p-fluid">
+                    <div class="col-12 md:col-6">
+                        <span class="mt-4 p-float-label p-input-icon-left">
+                            <i class="pi pi-user"></i>
+                            <input id="expirationDate" type="text" pInputText formControlName="expirationDate" [ngClass]="{ 'is-invalid': submitted && f.expirationDate.errors }">
+                            <label for="expirationDate">Expiración</label>
+                        </span>
+                        <div *ngIf="formTicket.controls['expirationDate'].invalid && formTicket.controls['expirationDate'].dirty">
+                            <small *ngIf="formTicket.controls['expirationDate'].errors.required" id="expirationDate" class="p-error block">Expiración es requerido</small>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-6">
+                        <span class="mt-4 p-float-label p-input-icon-left">
+                            <i class="pi pi-user"></i>
+                            <input id="comment" type="text" pInputText formControlName="comment" [ngClass]="{ 'is-invalid': submitted && f.comment.errors }">
+                            <label for="comment">Comentario</label>
+                        </span>
+                        <div *ngIf="formTicket.controls['comment'].invalid && formTicket.controls['comment'].dirty">
+                            <small *ngIf="formTicket.controls['comment'].errors.required" id="comment" class="p-error block">Comentario es requerido</small>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-6">
+                        <span class="mt-4 p-float-label p-input-icon-left">
+                            <i class="pi pi-user"></i>
+                            <p-dropdown [options]="Department" formControlName="deparmentId" optionValue="departmentId" optionLabel="name"></p-dropdown>
+                            <label for="deparmentId">Departamento</label>
+                        </span>
+                        <div *ngIf="formTicket.controls['deparmentId'].invalid && formTicket.controls['deparmentId'].dirty">
+                            <small *ngIf="formTicket.controls['deparmentId'].errors.required" id="deparmentId" class="p-error block">Departamento es requerido</small>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-6">
+                        <span class="mt-4 p-float-label p-input-icon-left">
+                            <i class="pi pi-user"></i>
+                            <p-dropdown [options]="Causes" formControlName="causesId" optionValue="causesId" optionLabel="name"></p-dropdown>
+                            <label for="causesId">Causas</label>
+                        </span>
+                        <div *ngIf="formTicket.controls['causesId'].invalid && formTicket.controls['causesId'].dirty">
+                            <small *ngIf="formTicket.controls['causesId'].errors.required" id="causesId" class="p-error block">Causas es requerido</small>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-6">
+                        <span class="mt-4 p-float-label p-input-icon-left">
+                            <i class="pi pi-user"></i>
+                            <p-dropdown [options]="Location" formControlName="locationId" optionValue="locationId" optionLabel="name"></p-dropdown>
+                            <label for="locationId">Ubicación</label>
+                        </span>
+                        <div *ngIf="formTicket.controls['locationId'].invalid && formTicket.controls['locationId'].dirty">
+                            <small *ngIf="formTicket.controls['locationId'].errors.required" id="locationId" class="p-error block">Ubicación es requerido</small>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            
+			
+		</div>
+	</div>
+</div>
+

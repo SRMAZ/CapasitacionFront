@@ -1,0 +1,60 @@
+<div class="grid">
+	<div class="col-12 xl:col-12">
+		<div class="card">
+			<ng-template [ngIf]="loading" [ngIfElse]="showTable">
+				<skeleton-table-component [title]="title"></skeleton-table-component>
+			</ng-template>
+
+			<ng-template #showTable>
+					<p-table #dt [value]="tickeList" [paginator]="true"  [rows]="5"
+					responsiveLayout="scroll"  styleClass="p-datatable-sm p-datatable-gridlines" [globalFilterFields]="['ticketsId','name', 'lote', 'locationName']">
+						<ng-template pTemplate="header">
+							<tr>
+								<th pSortableColumn="ticketsId">Id <p-sortIcon field="ticketsId"></p-sortIcon> <p-columnFilter type="text" field="ticketsId" display="menu" class="ml-auto" ></p-columnFilter></th>
+								<th pSortableColumn="brandName">Marca <p-sortIcon field="brandName"></p-sortIcon> <p-columnFilter type="text" field="brandName" display="menu" class="ml-auto"></p-columnFilter></th>
+								<th pSortableColumn="lote">Lote <p-sortIcon field="lote"></p-sortIcon><p-columnFilter type="text" field="lote" display="menu" class="ml-auto"></p-columnFilter></th>
+								<th pSortableColumn="expirationDate">Fecha Expiracion <p-sortIcon field="expirationDate"></p-sortIcon><p-columnFilter type="text" field="expirationDate" display="menu" class="ml-auto"></p-columnFilter></th>
+								<th pSortableColumn="locationName">Lugar <p-sortIcon field="locationName"></p-sortIcon><p-columnFilter type="text" field="locationName" display="menu" class="ml-auto"></p-columnFilter></th>
+								<th pSortableColumn="createUser">Usuario <p-sortIcon field="createUser"></p-sortIcon><p-columnFilter type="text" field="createUser" display="menu" class="ml-auto"></p-columnFilter></th>
+ 								<th>Acción</th>
+							</tr>
+						</ng-template>
+							<ng-template pTemplate="caption">
+                                <h4 class="mt-2">{{title}}</h4>
+								<div class="flex">
+									<button pButton  class="ml-2" pRipple type="button" routerLink="/ticket/Levantamiendo-de-Ticket"   pTooltip="Agregar nuevo usuario" tooltipPosition="bottom" label="Agregar" ></button>
+									<span class="p-input-icon-left ml-auto">
+										<i class="pi pi-search"></i>
+										<input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar una palabra" />
+									</span>
+								</div>
+							</ng-template>
+						<ng-template pTemplate="body" let-tickeList>
+							<tr>
+								<td style="width: 10%; min-width: 2rem;">{{tickeList.ticketsId }}</td>
+								<td style="width: 35%; min-width: 7rem;">{{tickeList.brandName}}</td>
+								<td style="width: 25%; min-width: 4rem;">{{tickeList.lote}}</td>
+								<td style="width: 20%; min-width: 4rem;">{{tickeList.expirationDate}}</td>
+								<td style="width: 35%; min-width: 5rem;">{{tickeList.locationName}}</td>
+								<td style="width: 35%; min-width: 5rem;">{{tickeList.createUser}}</td>
+								<!-- <td style="width: 15%; min-width: 4rem;">
+									<ng-template [ngIf]="user.active" [ngIfElse]="inactive">
+										<p-chip label="isActive" styleClass="custom-chip" icon="pi pi-check"></p-chip>
+									</ng-template>
+									<ng-template #inactive>
+										<p-chip label="Inactivo" icon="pi pi-check"></p-chip>
+									</ng-template>
+								</td> -->
+								<td style="width: 20%;">
+									<button   pButton pRipple type="button" icon="pi pi-pencil" class="p-button p-component p-button-text p-button-icon-only"></button>
+								</td>
+							</tr>
+						</ng-template>
+					</p-table>
+
+					<Ticket-dialog-component></Ticket-dialog-component>
+			</ng-template>
+		</div>
+	</div>
+</div>
+

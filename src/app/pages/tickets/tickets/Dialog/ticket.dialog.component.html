@@ -1,0 +1,72 @@
+<p-dialog header="Crear pedido de compra" [(visible)]="display" modal="true" blockScroll="true"
+    [style]="{width: '50vw'}">
+
+    <ng-template [ngIf]="loading" [ngIfElse]="data">
+        Cargando...
+    </ng-template>
+    <ng-template #data>
+        <form [formGroup]="formTicket" *ngIf="formTicket" class="mb-5">
+            <div class="grid p-fluid">
+                <!-- Listas Desplegables -->
+                
+                <div class="field col-12 md:col-6">
+                    <span class="p-float-label p-input-icon-left">
+                        <p-dropdown inputId="dropdown" [autoDisplayFirst]="false" [options]="Department" [(ngModel)]="deparmentId" optionLabel="name"></p-dropdown>
+                        <label for="Department">Dropdown</label>
+                    </span>
+                    <div *ngIf="formTicket.controls['deparmentId'].invalid && formTicket.controls['deparmentId'].dirty">
+                        <small *ngIf="formTicket.controls['deparmentId'].errors.required" id="deparmentId"
+                            class="p-error block">Causal es requerido</small>
+                    </div>
+                </div>
+
+                <div class="col-12 md:col-6">
+                    <label for="deparmentId">Departamento</label>
+                    <span class="mt-4 p-float-label p-input-icon-left">
+                        <i class="pi pi-user"></i>
+                        <p-dropdown [options]="Department" formControlName="deparmentId" optionValue="deparmentId" optionLabel="name"></p-dropdown>
+                    </span>
+                    <div *ngIf="formTicket.controls['deparmentId'].invalid && formTicket.controls['deparmentId'].dirty" >
+                        <small  *ngIf="formTicket.controls['deparmentId'].errors.required" id="deparmentId" class="p-error block">Departamento es requerido</small>
+                    </div>
+                </div>
+<!-- 
+                <div class="col-12 md:col-6">
+                    <span class="mt-4 p-float-label p-input-icon-left">
+                        <i class="pi pi-user"></i>
+                        <p-dropdown [options]="roles" formControlName="roleId" optionValue="roleId" optionLabel="description"></p-dropdown>
+                        <label for="roleId">Rol</label>
+                    </span>
+                    <div *ngIf="formUser.controls['roleId'].invalid && formUser.controls['roleId'].dirty" >
+                        <small  *ngIf="formUser.controls['roleId'].errors.required" id="roleId" class="p-error block">Rol es requerido</small>
+                    </div>
+                </div> -->
+
+                <!-- version 13.4.3 -->
+                <div class="field col-12 md:col-4">
+                    <span class="p-float-label">
+                        <p-dropdown inputId="dropdown" [autoDisplayFirst]="false" [options]="Department" optionValue="deparmentId" [(ngModel)]="deparmentId" optionLabel="name"></p-dropdown>
+                        <label for="Department">Departamento</label>
+                    </span>
+                    <div *ngIf="formTicket.controls['deparmentId'].invalid && formTicket.controls['deparmentId'].dirty">
+                        <small *ngIf="formTicket.controls['deparmentId'].errors.required" id="deparmentId"
+                            class="p-error block">Departamento es requerido</small>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+        <br><br><br><br>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <ng-template [ngIf]="isAdd" [ngIfElse]="addButton">
+            <button pButton type="button" [disabled]="formTicket.invalid || loading" (click)="add()"
+                label="Agregar"></button>
+        </ng-template>
+        <ng-template #addButton>
+            <button pButton type="button" [disabled]="formTicket.invalid || loading" (click)="edit()"
+                label="Editar"></button>
+        </ng-template>
+    </ng-template>
+</p-dialog>

@@ -1,0 +1,47 @@
+<p-dialog header="Crear Document" [(visible)]="display" modal="true" blockScroll="true"
+    [style]="{ width: '50vw' }">
+    <ng-template [ngIf]="loading" [ngIfElse]="data"> Cargando... </ng-template>
+
+    <!-- formulario -->
+    <ng-template #data>
+        <form [formGroup]="documentFom" *ngIf="documentFom" class="mb-5">
+            <!-- Ordena los bloques -->
+            <div class="grid p-fluid">
+                <!-- espacio de columnas -->
+                <div class="col-12 md:col-12">
+                    <span class="mt-4 p-float-label p-input-icon-left">
+                        <div class="p-inputgroup">
+                            <!-- <label for="name">Ingrese el tipo de documeto</label>    -->
+                            <input id="name" type="text" pInputText formControlName="name" [ngClass]="{
+                                'is-invalid': submitted && f.name.errors
+                            }" />
+                        <label for="name">Ingrese el tipo de documento</label>
+                        </div>
+                    </span>
+                    <div *ngIf="
+                            documentFom.controls['name'].invalid &&
+                            documentFom.controls['name'].dirty
+                        ">
+                        <small *ngIf="
+                                documentFom.controls['name'].errors.required
+                            " id="name" class="p-error block">Nombre de documeto es requerido</small>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </form> 
+       
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <!-- botones con acciones  -->
+        <ng-template [ngIf]="isAdd" [ngIfElse]="addButton">
+            <button pButton type="button" [disabled]="documentFom.invalid || loading" (click)="add()"
+                label="Agregar"></button>
+        </ng-template>
+        <ng-template #addButton>
+            <button pButton type="button" [disabled]="documentFom.invalid || loading" (click)="edit()"
+                label="Editar"></button>
+        </ng-template>
+    </ng-template>
+</p-dialog>
